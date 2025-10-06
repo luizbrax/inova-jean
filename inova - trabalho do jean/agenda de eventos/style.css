@@ -1,0 +1,358 @@
+/* style.css */
+
+/* Reset e Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5; /* Cinza claro suave */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+}
+
+.header nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.header nav a i {
+    margin-right: 5px;
+}
+
+/* Container Principal */
+.container {
+    margin-top: 60px;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mini Agenda */
+.mini-agenda {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.day-name:nth-child(1), .day-name:nth-child(7) { /* Finais de semana */
+    color: #ff0000; /* Vermelho para dom e sáb */
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.day {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.day:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.current-day {
+    border: 2px solid #007bff;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+}
+
+.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    background-color: #28a745;
+    border-radius: 50%;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.day:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Área de Eventos */
+.eventos {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters input, .filters select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex: 1;
+}
+
+#event-list {
+    list-style: none;
+}
+
+.event-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    transition: box-shadow 0.3s;
+}
+
+.event-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-item h3 {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.category {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.category.Trabalho { background-color: #007bff; }
+.category.Estudos { background-color: #ffc107; }
+.category.Pessoal { background-color: #28a745; }
+
+.description {
+    cursor: pointer;
+}
+
+.description.full {
+    display: block;
+}
+
+.actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.edit-btn { background-color: #ffc107; }
+.delete-btn { background-color: #dc3545; }
+.complete-btn { background-color: #28a745; }
+
+.concluido {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 500px;
+    animation: fadeIn 0.3s;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover {
+    color: #000;
+    cursor: pointer;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, #ff0000, #000000); /* Gradiente vermelho para preto */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(90deg, #000000, #ff0000);
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        font-size: 0.8rem;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .header nav {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-days, .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .day {
+        padding: 5px;
+    }
+}
