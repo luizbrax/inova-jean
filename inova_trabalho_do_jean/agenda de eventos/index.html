@@ -1,10 +1,10 @@
-<!-- eventos.html -->
+<!-- agenda.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Eventos</title>
+    <title>Agenda de Eventos</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,26 +19,26 @@
     </header>
 
     <main class="container">
-        <section class="eventos">
-            <div class="filters">
-                <input type="text" id="search-input" placeholder="Pesquisar eventos...">
-                <select id="category-filter">
-                    <option value="">Todas Categorias</option>
-                    <option value="Trabalho">Trabalho</option>
-                    <option value="Estudos">Estudos</option>
-                    <option value="Pessoal">Pessoal</option>
-                </select>
-                <select id="status-filter">
-                    <option value="">Todos Status</option>
-                    <option value="pendente">Pendente</option>
-                    <option value="concluido">Concluído</option>
-                </select>
+        <section class="mini-agenda">
+            <div class="calendar-header">
+                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                <h2 id="current-month"></h2>
+                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <ul id="event-list"></ul>
+            <div class="calendar-days">
+                <div class="day-name">Dom</div>
+                <div class="day-name">Seg</div>
+                <div class="day-name">Ter</div>
+                <div class="day-name">Qua</div>
+                <div class="day-name">Qui</div>
+                <div class="day-name">Sex</div>
+                <div class="day-name">Sáb</div>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
         </section>
     </main>
 
-    <!-- Modal para adicionar/editar evento (reutilizado) -->
+    <!-- Modal para adicionar/editar evento -->
     <div id="event-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -73,6 +73,6 @@
         <a href="#" id="add-event-link"><i class="fas fa-plus"></i> Adicionar Novo Evento</a>
     </footer>
 
-    <script src="eventos.js"></script>
+    <script src="agenda.js"></script>
 </body>
 </html>
