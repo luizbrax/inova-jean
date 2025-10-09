@@ -43,44 +43,63 @@ function renderCalendar() {
     }
 
     // Dias do mês
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayElem = document.createElement('div');
-        dayElem.classList.add('day');
-        dayElem.textContent = day;
+for (let day = 1; day <= daysInMonth; day++) {
+    const dayElem = document.createElement('div');
+    dayElem.classList.add('day');
 
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayEvents = events.filter(e => e.date === dateStr);
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const dayEvents = events.filter(e => e.date === dateStr);
+    const feriado = feriados.find(f => f.date === dateStr);
 
-        // Eventos existentes
-        if (dayEvents.length > 0) {
-            dayElem.classList.add('has-event');
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('tooltip');
-            tooltip.innerHTML = dayEvents.map(e => `<p>${e.title} (${e.time})</p>`).join('');
-            dayElem.appendChild(tooltip);
-        }
+    // Contêiner interno para número do dia e feriado
+    const innerContainer = document.createElement('div');
+    innerContainer.classList.add('day-inner');
 
-        // Dia atual
-        if (day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
-            dayElem.classList.add('current-day');
-        }
+    // Número do dia
+    const dayNumber = document.createElement('span');
+    dayNumber.classList.add('day-number');
+    dayNumber.textContent = day;
+    innerContainer.appendChild(dayNumber);
 
-        // === CHECAR SE É FERIADO ===
-        const feriado = feriados.find(f => f.date === dateStr);
-        if (feriado) {
-            dayElem.classList.add('feriado');
-
-            // Tooltip personalizado do feriado
-            const feriadoTooltip = document.createElement('div');
-            feriadoTooltip.classList.add('feriado-tooltip');
-            feriadoTooltip.textContent = feriado.name;
-            dayElem.appendChild(feriadoTooltip);
-        }
-
-        // Quando clica no dia → abre modal e preenche a data
-        dayElem.addEventListener('click', () => openModal(dateStr));
-        calendarGrid.appendChild(dayElem);
+    // Feriado (aparece logo abaixo do número)
+    if (feriado) {
+        dayElem.classList.add('feriado');
+        const feriadoTooltip = document.createElement('div');
+        feriadoTooltip.classList.add('feriado-tooltip');
+        feriadoTooltip.textContent = feriado.name;
+        innerContainer.appendChild(feriadoTooltip);
     }
+
+    // Adiciona contêiner interno no dia
+    dayElem.appendChild(innerContainer);
+
+    // Eventos (aparecem abaixo do dia, fora do innerContainer se houver feriado)
+    if (dayEvents.length > 0 && feriado) {
+    dayElem.classList.add('has-event'); // importante para o CSS
+    const eventTooltip = document.createElement('div');
+    eventTooltip.classList.add('tooltip');
+    eventTooltip.innerHTML = dayEvents.map(e => `<p>${e.title} (${e.time})</p>`).join('');
+
+    // Se houver feriado, coloca abaixo do dia
+    if (feriado) {
+        eventTooltip.style.position = 'relative';
+        eventTooltip.style.top = '5px';
+    }
+    
+    dayElem.appendChild(eventTooltip); // adiciona dentro do dia, mas tooltip fica oculto
+}
+
+
+    // Dia atual
+    if (day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
+        dayElem.classList.add('current-day');
+    }
+
+    // Clique para abrir modal
+    dayElem.addEventListener('click', () => openModal(dateStr));
+    calendarGrid.appendChild(dayElem);
+}
+
 }
 
 // Modal

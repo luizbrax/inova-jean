@@ -391,3 +391,47 @@ form input, form select, form textarea {
     visibility: visible;
     opacity: 1;
 }
+
+/* Modal de confirmação */
+.confirm-box {
+  max-width: 400px;
+  text-align: center;
+  padding: 20px;
+}
+
+.confirm-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-yes {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-yes:hover {
+  background-color: #218838;
+}
+
+.btn-no {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-no:hover {
+  background-color: #c82333;
+}
+
+

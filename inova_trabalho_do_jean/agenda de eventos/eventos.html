@@ -1,6 +1,7 @@
 <!-- eventos.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <header class="header">
         <h1>Agenda de Eventos</h1>
@@ -74,5 +76,17 @@
     </footer>
 
     <script src="eventos.js"></script>
+    <!-- Modal de confirmação -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content confirm-box">
+            <h3 id="confirm-message">Tem certeza que deseja excluir este evento?</h3>
+            <div class="confirm-actions">
+                <button id="confirm-yes" class="btn-yes">Sim</button>
+                <button id="confirm-no" class="btn-no">Não</button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>

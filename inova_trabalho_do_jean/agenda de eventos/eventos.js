@@ -1,104 +1,28 @@
-// Inicialização
-let currentDate = new Date();
-let events = JSON.parse(localStorage.getItem('events')) || [];
-let feriados = []; // armazenará os feriados do ano atual
+// === eventos.js ===
 
-// Funções auxiliares
+// === Inicialização ===
+let events = JSON.parse(localStorage.getItem('events')) || [];
+
+// === Funções auxiliares ===
 function saveEvents() {
     localStorage.setItem('events', JSON.stringify(events));
 }
 
-// === FUNÇÃO PARA BUSCAR FERIADOS ===
-async function carregarFeriados(ano) {
-    try {
-        const response = await fetch(`https://brasilapi.com.br/api/feriados/v1/${ano}`);
-        if (!response.ok) throw new Error('Erro ao buscar feriados');
-        feriados = await response.json();
-        renderCalendar(); // renderiza após carregar
-    } catch (err) {
-        console.error('Erro ao carregar feriados:', err);
-        feriados = [];
-        renderCalendar();
-    }
-}
-
-// === FUNÇÃO PARA RENDERIZAR O CALENDÁRIO ===
-function renderCalendar() {
-    const calendarGrid = document.getElementById('calendar-grid');
-    const currentMonth = document.getElementById('current-month');
-    calendarGrid.innerHTML = '';
-
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    currentMonth.textContent = `${new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(currentDate)} ${year}`;
-
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    // Dias vazios antes do primeiro dia
-    for (let i = 0; i < firstDay; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.classList.add('day', 'empty');
-        calendarGrid.appendChild(emptyDay);
-    }
-
-    // Dias do mês
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayElem = document.createElement('div');
-        dayElem.classList.add('day');
-        dayElem.textContent = day;
-
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayEvents = events.filter(e => e.date === dateStr);
-
-        // Eventos existentes
-        if (dayEvents.length > 0) {
-            dayElem.classList.add('has-event');
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('tooltip');
-            tooltip.innerHTML = dayEvents.map(e => `<p>${e.title} (${e.time})</p>`).join('');
-            dayElem.appendChild(tooltip);
-        }
-
-        // Dia atual
-        if (day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
-            dayElem.classList.add('current-day');
-        }
-
-        // === CHECAR SE É FERIADO ===
-        const feriado = feriados.find(f => f.date === dateStr);
-        if (feriado) {
-            dayElem.classList.add('feriado');
-
-            // Tooltip personalizado do feriado
-            const feriadoTooltip = document.createElement('div');
-            feriadoTooltip.classList.add('feriado-tooltip');
-            feriadoTooltip.textContent = feriado.name;
-            dayElem.appendChild(feriadoTooltip);
-        }
-
-        // Quando clica no dia → abre modal e preenche a data
-        dayElem.addEventListener('click', () => openModal(dateStr));
-        calendarGrid.appendChild(dayElem);
-    }
-}
-
-// Modal
+// === Modal ===
 const modal = document.getElementById('event-modal');
 const closeBtn = document.querySelector('.close');
 const form = document.getElementById('event-form');
 const modalTitle = document.getElementById('modal-title');
 let editingIndex = -1;
 
-function openModal(date, event = null) {
+// === Funções do modal ===
+function openModal(event = null) {
     modal.style.display = 'block';
-
-    // Preenche automaticamente o campo de data com o dia selecionado
-    document.getElementById('event-date').value = date || '';
 
     if (event) {
         modalTitle.textContent = 'Editar Evento';
         document.getElementById('event-title').value = event.title;
+        document.getElementById('event-date').value = event.date;
         document.getElementById('event-time').value = event.time;
         document.getElementById('event-category').value = event.category;
         document.getElementById('event-description').value = event.description;
@@ -106,12 +30,9 @@ function openModal(date, event = null) {
     } else {
         modalTitle.textContent = 'Adicionar Evento';
         clearForm();
-        document.getElementById('event-date').value = date || ''; // garante que a data fica mesmo se for novo
         editingIndex = -1;
     }
 }
-
-
 
 function clearForm() {
     document.getElementById('event-title').value = '';
@@ -129,13 +50,15 @@ window.addEventListener('click', (e) => {
     if (e.target === modal) modal.style.display = 'none';
 });
 
+// === Salvar evento (novo ou edição) ===
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const title = document.getElementById('event-title').value;
+
+    const title = document.getElementById('event-title').value.trim();
     const date = document.getElementById('event-date').value;
     const time = document.getElementById('event-time').value;
     const category = document.getElementById('event-category').value;
-    const description = document.getElementById('event-description').value;
+    const description = document.getElementById('event-description').value.trim();
 
     if (!title || !date || !time) {
         alert('Título, data e hora são obrigatórios!');
@@ -152,29 +75,119 @@ form.addEventListener('submit', (e) => {
 
     events.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
     saveEvents();
-    renderCalendar();
+    renderEvents();
     modal.style.display = 'none';
 });
 
-// Navegação de meses
-document.getElementById('prev-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    const year = currentDate.getFullYear();
-    carregarFeriados(year);
-});
+// === Listagem e Filtros ===
+document.addEventListener('DOMContentLoaded', () => {
+    const lista = document.getElementById('event-list');
+    if (!lista) return;
 
-document.getElementById('next-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    const year = currentDate.getFullYear();
-    carregarFeriados(year);
-});
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const statusFilter = document.getElementById('status-filter');
 
-// Adicionar evento do rodapé
-document.getElementById('add-event-link').addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-});
+    // Renderização dos eventos
+    function renderEvents(filtered = events) {
+        lista.innerHTML = '';
 
-// Inicial
-const anoAtual = new Date().getFullYear();
-carregarFeriados(anoAtual);
+        if (filtered.length === 0) {
+            lista.innerHTML = '<li class="sem-eventos">Nenhum evento encontrado.</li>';
+            return;
+        }
+
+        // Ordena cronologicamente
+        filtered.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+
+        filtered.forEach(ev => {
+            const li = document.createElement('li');
+            li.classList.add('event-item');
+            if (ev.status === 'concluido') li.classList.add('concluido');
+
+            li.innerHTML = `
+                <div class="evento-header">
+                    <h3>${ev.title}</h3>
+                    <span class="category ${ev.category}">${ev.category}</span>
+                </div>
+                <p><strong>Data:</strong> ${ev.date}</p>
+                <p><strong>Hora:</strong> ${ev.time}</p>
+                <p><strong>Descrição:</strong> ${ev.description || 'Sem descrição'}</p>
+                <div class="actions">
+                    <button class="edit-btn">Editar</button>
+                    <button class="complete-btn">${ev.status === 'pendente' ? 'Concluir' : 'Reabrir'}</button>
+                    <button class="delete-btn">Excluir</button>
+                </div>
+            `;
+
+            // === Botões de ação ===
+            li.querySelector('.edit-btn').addEventListener('click', () => openModal(ev));
+
+            li.querySelector('.complete-btn').addEventListener('click', () => {
+                ev.status = ev.status === 'pendente' ? 'concluido' : 'pendente';
+                saveEvents();
+                renderEvents();
+            });
+
+            li.querySelector('.delete-btn').addEventListener('click', () => {
+                const confirmModal = document.getElementById('confirm-modal');
+                const confirmYes = document.getElementById('confirm-yes');
+                const confirmNo = document.getElementById('confirm-no');
+
+                confirmModal.style.display = 'block';
+
+                confirmYes.onclick = () => {
+                    events = events.filter(e => e !== ev);
+                    saveEvents();
+                    renderEvents();
+                    confirmModal.style.display = 'none';
+                };
+
+                confirmNo.onclick = () => {
+                    confirmModal.style.display = 'none';
+                };
+
+                window.onclick = (e) => {
+                    if (e.target === confirmModal) confirmModal.style.display = 'none';
+                };
+            });
+
+
+            lista.appendChild(li);
+        });
+    }
+
+    // Aplicar filtros
+    function aplicarFiltros() {
+        let filtrados = events;
+
+        const busca = searchInput.value.toLowerCase();
+        const categoria = categoryFilter.value;
+        const status = statusFilter.value;
+
+        filtrados = filtrados.filter(ev => {
+            const matchBusca =
+                ev.title.toLowerCase().includes(busca) ||
+                ev.description.toLowerCase().includes(busca);
+            const matchCategoria = categoria ? ev.category === categoria : true;
+            const matchStatus = status ? ev.status === status : true;
+            return matchBusca && matchCategoria && matchStatus;
+        });
+
+        renderEvents(filtrados);
+    }
+
+    // Listeners
+    searchInput.addEventListener('input', aplicarFiltros);
+    categoryFilter.addEventListener('change', aplicarFiltros);
+    statusFilter.addEventListener('change', aplicarFiltros);
+
+    // Botão "Adicionar Novo Evento"
+    document.getElementById('add-event-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+    });
+
+    // Render inicial
+    renderEvents();
+});
