@@ -1,0 +1,238 @@
+/* ===== MAIN CONTENT ===== */
+main {
+    margin-top: 80px;
+    flex: 1;
+    padding-bottom: 100px;
+}
+
+/* ===== CARROSSEL ===== */
+.carrossel-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.carrossel {
+    position: relative;
+    height: 400px;
+    background-color: var(--marrom);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.carrossel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--branco);
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--marsala), var(--marrom));
+}
+
+.carrossel-slide.active {
+    display: flex;
+}
+
+.carrossel-slide h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--dourado);
+}
+
+.carrossel-slide p {
+    font-size: 1.2rem;
+}
+
+.carrossel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.carrossel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carrossel-dot.active {
+    background-color: var(--dourado);
+}
+
+/* ===== PRODUTOS ===== */
+.produtos-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.produtos-titulo {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--marsala);
+    margin-bottom: 2rem;
+}
+
+.produtos-grade {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.produto-card {
+    background-color: var(--branco);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.produto-imagem {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background-color: var(--cinza-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Adicione esta linha */
+}
+
+/* Adicione esta regra nova */
+.produto-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mude de 'cover' para 'contain' */
+    object-position: center;
+}
+.produto-nome {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--marrom);
+    margin-bottom: 0.5rem;
+}
+
+.produto-preco {
+    font-size: 1.5rem;
+    color: var(--marsala);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.produto-status {
+    color: var(--cinza);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.produto-status.fora-estoque {
+    color: #d32f2f;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.btn-adicionar {
+    background-color: var(--dourado);
+    color: var(--preto);
+    font-weight: bold;
+}
+
+.btn-adicionar:hover:not(:disabled) {
+    background-color: #c29d2f;
+    transform: scale(1.05);
+}
+
+.btn-adicionar:disabled {
+    background-color: var(--cinza);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: var(--marrom);
+    color: var(--branco);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+}
+
+footer a {
+    color: var(--dourado);
+    text-decoration: none;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1024px) {
+    .produtos-grade {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-center {
+        gap: 1rem;
+    }
+
+    .produtos-grade {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .carrossel {
+        height: 300px;
+    }
+
+    .carrinho-modal {
+        width: 100%;
+        right: -100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .navbar-center {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .produtos-grade {
+        grid-template-columns: 1fr;
+    }
+}

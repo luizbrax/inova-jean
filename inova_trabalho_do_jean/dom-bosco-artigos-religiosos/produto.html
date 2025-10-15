@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - Dom Bosco Artigos Religiosos</title>
+    <link rel="stylesheet" href="../dom-bosco-artigos-religiosos/css/style.css">
+    <link rel="stylesheet" href="../dom-bosco-artigos-religiosos/css/produtos.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">Dom Bosco Artigos Religiosos</a>
+            <div style="display: flex; gap: 2rem;">
+                <a href="index.html" style="color: white; text-decoration: none; font-size: 1.1rem; transition: color 0.3s; cursor: pointer;">Home</a>
+                <a href="sobre.html" style="color: white; text-decoration: none; font-size: 1.1rem; transition: color 0.3s; cursor: pointer;">Sobre</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="produto-detalhes">
+            <div class="produto-imagem-container" id="produtoImagem"></div>
+            
+            <div class="produto-info">
+                <h1 id="produtoNome"></h1>
+                <div class="produto-preco" id="produtoPreco"></div>
+                <div class="produto-descricao" id="produtoDescricao"></div>
+                <div class="produto-estoque" id="produtoEstoque"></div>
+
+                <div class="produto-quantidade">
+                    <label>Quantidade:</label>
+                    <div class="quantidade-control">
+                        <button class="quantidade-btn" onclick="diminuirQuantidade()">-</button>
+                        <span class="quantidade-valor" id="quantidadeValor">1</span>
+                        <button class="quantidade-btn" onclick="aumentarQuantidade()" id="btnAumentar">+</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-adicionar" onclick="adicionarAoCarrinho()" id="btnAdicionar">
+                    Adicionar ao Carrinho
+                </button>
+
+                <div class="produto-especificacoes">
+                    <h3>Especificações</h3>
+                    <div class="especificacao-item">
+                        <span class="especificacao-label">Código:</span>
+                        <span id="produtoCodigo"></span>
+                    </div>
+                    <div class="especificacao-item">
+                        <span class="especificacao-label">Disponibilidade:</span>
+                        <span id="produtoDisponibilidade"></span>
+                    </div>
+                    <div class="especificacao-item">
+                        <span class="especificacao-label">Categoria:</span>
+                        <span>Artigos Religiosos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="mensagem-sucesso" id="mensagemSucesso">
+        ✓ Produto adicionado ao carrinho!
+    </div>
+
+    <footer>
+        <p>© 2025 Dom Bosco Artigos Religiosos – Todos os direitos reservados.</p>
+        <p>Contato: <a href="mailto:luizbrazx1@gmail.com">luizbrazx1@gmail.com</a></p>
+    </footer>
+
+    <script src="../dom-bosco-artigos-religiosos/js/produtos.js"></script>
+</body>
+</html>
