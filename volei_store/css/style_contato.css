@@ -1,0 +1,12 @@
+/* css/style_contato.css */
+main {
+    text-align: center;
+    padding: 20px;
+    background: #0d2b44;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease;
+}
+p {
+    font-size: 1.2em;
+    color: #e0e0e0;
+}

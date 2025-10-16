@@ -1,0 +1,121 @@
+/* css/style.css (base, seção ajustada) */
+body {
+    font-family: 'Playfair Display', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1a3c5e;
+    color: #e0e0e0;
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+.light-theme {
+    background: #ffffff;
+    color: #1a3c5e;
+}
+.dark-theme {
+    background: #1a3c5e;
+    color: #e0e0e0;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #0d2b44;
+    border-bottom: 2px solid #2e7d32;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease;
+}
+header h1 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #ffffff;
+}
+nav {
+    display: flex;
+    gap: 15px;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-actions #theme-toggle {
+    background: #2e7d32;
+    color: #ffffff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.header-actions #theme-toggle:hover {
+    background: #1a5e20;
+    transform: scale(1.05);
+}
+nav a, .header-actions a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1em;
+    padding: 5px 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+nav a:hover, .header-actions a:hover {
+    color: #2e7d32;
+    transform: scale(1.1);
+}
+main {
+    padding: 20px;
+    min-height: 70vh;
+    animation: fadeIn 0.5s ease;
+}
+.notification {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #2e7d32;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    animation: bounceIn 0.5s ease;
+}
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #0d2b44;
+    color: #e0e0e0;
+    border-top: 2px solid #2e7d32;
+    animation: slideUp 0.5s ease;
+}
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+footer a:hover {
+    color: #2e7d32;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}

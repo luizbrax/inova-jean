@@ -1,0 +1,32 @@
+/* css/style_admin.css */
+section {
+    margin-bottom: 20px;
+    background: #0d2b44; /* Azul escuro */
+    padding: 15px;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+ul li {
+    margin: 5px 0;
+    color: #e0e0e0;
+}
+ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+ul li a:hover {
+    color: #2e7d32;
+    transform: scale(1.05);
+}
+canvas {
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+    border: 2px solid #2e7d32;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease;
+}
