@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda - Calendário</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/calendario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <h1>📅 Agenda de Eventos</h1>
+        <nav>
+            <a href="index.html" class="active"><i class="fas fa-calendar"></i> Calendário</a>
+            <a href="eventos.html"><i class="fas fa-list"></i> Lista de Eventos</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="calendario">
+            <div class="calendario-header">
+                <button id="btn-mes-anterior"><i class="fas fa-chevron-left"></i></button>
+                <h2 id="mes-atual"></h2>
+                <button id="btn-proximo-mes"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="dias-semana">
+                <div class="dia-nome domingo">Dom</div>
+                <div class="dia-nome">Seg</div>
+                <div class="dia-nome">Ter</div>
+                <div class="dia-nome">Qua</div>
+                <div class="dia-nome">Qui</div>
+                <div class="dia-nome">Sex</div>
+                <div class="dia-nome sabado">Sáb</div>
+            </div>
+
+            <div id="grade-calendario" class="grade-calendario"></div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal-evento" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar">&times;</span>
+            <h2 id="titulo-modal">Adicionar Evento</h2>
+            <form id="form-evento">
+                <div class="form-grupo">
+                    <label for="titulo-evento">Título *</label>
+                    <input type="text" id="titulo-evento" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="data-evento">Data *</label>
+                    <input type="date" id="data-evento" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="hora-evento">Hora *</label>
+                    <input type="time" id="hora-evento" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="categoria-evento">Categoria *</label>
+                    <select id="categoria-evento" required>
+                        <option value="Trabalho">💼 Trabalho</option>
+                        <option value="Estudos">📚 Estudos</option>
+                        <option value="Pessoal">👤 Pessoal</option>
+                        <option value="Reunião">🤝 Reunião</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="descricao-evento">Descrição</label>
+                    <textarea id="descricao-evento" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-salvar">💾 Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Agenda de Eventos - Desenvolvido por Você</p>
+        <button id="btn-adicionar-evento" class="btn-add-footer">
+            <i class="fas fa-plus"></i> Adicionar Evento
+        </button>
+    </footer>
+
+    <script src="js/calendario.js"></script>
+</body>
+</html>

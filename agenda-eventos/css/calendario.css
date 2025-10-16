@@ -1,0 +1,160 @@
+.calendario {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.calendario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.calendario-header h2 {
+    font-size: 1.8rem;
+    color: #667eea;
+    text-transform: capitalize;
+}
+
+.calendario-header button {
+    background-color: #667eea;
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.calendario-header button:hover {
+    background-color: #764ba2;
+    transform: scale(1.1);
+}
+
+.dias-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.dia-nome {
+    text-align: center;
+    font-weight: 700;
+    color: #666;
+    padding: 0.5rem;
+}
+
+.dia-nome.domingo,
+.dia-nome.sabado {
+    color: #e74c3c;
+}
+
+.grade-calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.dia {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    font-weight: 600;
+    color: #333;
+}
+
+.dia:hover {
+    background-color: #e9ecef;
+    transform: scale(1.05);
+}
+
+.dia.vazio {
+    background-color: transparent;
+    cursor: default;
+}
+
+.dia.vazio:hover {
+    transform: none;
+}
+
+.dia.atual {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.dia.tem-evento::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 6px;
+    height: 6px;
+    background-color: #28a745;
+    border-radius: 50%;
+}
+
+.dia.feriado {
+    background: linear-gradient(135deg, #ffcccc, #ff9999);
+    color: #c0392b;
+    font-weight: 700;
+}
+
+/* Tooltip */
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    z-index: 10;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+}
+
+.dia:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .calendario {
+        padding: 1rem;
+    }
+
+    .calendario-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .dia {
+        font-size: 0.9rem;
+    }
+}
